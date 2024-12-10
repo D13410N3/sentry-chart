@@ -152,6 +152,8 @@ sentry.conf.py: |-
   # General #
   ###########
 
+  # Disable sends anonymous usage statistics
+  SENTRY_BEACON = False
 
   secret_key = env('SENTRY_SECRET_KEY')
   if not secret_key:
@@ -512,6 +514,8 @@ sentry.conf.py: |-
 
               {{- if .Values.sentry.features.enableSpan }}
               "projects:span-metrics-extraction",
+              "projects:span-metrics-extraction-addons",
+              "organizations:indexed-spans-extraction",
               "organizations:starfish-browser-resource-module-image-view",
               "organizations:starfish-browser-resource-module-ui",
               "organizations:starfish-browser-webvitals",

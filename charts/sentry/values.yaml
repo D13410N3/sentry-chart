@@ -6,6 +6,8 @@ ipv6: false
 global:
   nodeSelector: {}
   tolerations: []
+  sidecars: []
+  volumes: []
 
 user:
   create: true
@@ -1113,6 +1115,7 @@ snuba:
     # queuedMinMessages: ""
     # volumes: []
     # volumeMounts: []
+    # noStrictOffsetReset: false
 
   metricsConsumer:
     enabled: true
@@ -1732,6 +1735,7 @@ symbolicator:
 
     # volumes: []
     # volumeMounts: []
+    # sidecars: []
 
   # TODO The cleanup cronjob is not yet implemented
   cleanup:
@@ -1739,6 +1743,8 @@ symbolicator:
     # podLabels: {}
     # affinity: {}
     # env: []
+    # volumes: []
+    # sidecars: []
 
 auth:
   register: true
@@ -1806,7 +1812,7 @@ openai: {}
 #   existingSecretKey: ""   # by default "api-token"
 
 nginx:
-  enabled: true
+  enabled: true  # true, if Safari compatibility is needed
   containerPort: 8080
   existingServerBlockConfigmap: '{{ template "sentry.fullname" . }}'
   resources: {}
@@ -1884,7 +1890,7 @@ filestore:
       ##   GKE, AWS & OpenStack)
       ##
       # storageClass: "-"
-      accessMode: ReadWriteOnce
+      accessMode: ReadWriteOnce  # Set ReadWriteMany for work Replays
       size: 10Gi
 
       ## Whether to mount the persistent volume to the Sentry worker and
@@ -2438,6 +2444,10 @@ metrics:
   affinity: {}
   securityContext: {}
   containerSecurityContext: {}
+
+  volumes: []
+  sidecars: []
+
   # schedulerName:
   # Optional extra labels for pod, i.e. redis-client: "true"
   # podLabels: {}
@@ -2474,3 +2484,39 @@ revisionHistoryLimit: 10
 #   options: []
 
 extraManifests: []
+
+pgbouncer:
+  enabled: false
+  postgres:
+    cp_max: 10
+    cp_min: 5
+    host: ''
+    dbname: ''
+    user: ''
+    password: ''
+  image:
+    repository: "bitnami/pgbouncer"
+    tag: "1.23.1-debian-12-r5"
+    pullPolicy: IfNotPresent
+  replicas: 2
+  podDisruptionBudget:
+    enabled: true
+    # Define either 'minAvailable' or 'maxUnavailable', never both.
+    minAvailable: 1
+    # -- Maximum unavailable pods set in PodDisruptionBudget. If set, 'minAvailable' is ignored.
+    # maxUnavailable: 1
+  authType: "md5"
+  maxClientConn: "8192"
+  poolSize: "50"
+  poolMode: "transaction"
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 25%
+  priorityClassName: ''
+  topologySpreadConstraints: []

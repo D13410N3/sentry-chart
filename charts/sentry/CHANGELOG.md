@@ -1,5 +1,27 @@
 # Changelog
 
+## [26.8.0](https://github.com/sentry-kubernetes/charts/compare/sentry-v26.7.0...sentry-v26.8.0) (2024-12-04)
+
+
+### Features
+
+* add configuration for noStrictOffsetReset ([#1620](https://github.com/sentry-kubernetes/charts/issues/1620)) ([234552e](https://github.com/sentry-kubernetes/charts/commit/234552e186a5b9ed814595ce83bc744034c93821))
+* Add missing sidecar and global parameter for deployments & hooks ([#1230](https://github.com/sentry-kubernetes/charts/issues/1230)) ([ac8143f](https://github.com/sentry-kubernetes/charts/commit/ac8143fd1607c0493ea5c60940be3e649f6d613b))
+
+## [26.7.0](https://github.com/sentry-kubernetes/charts/compare/sentry-v26.6.0...sentry-v26.7.0) (2024-11-28)
+
+
+### Features
+
+* pgbouncer for postgresql ([#1607](https://github.com/sentry-kubernetes/charts/issues/1607)) ([07157bd](https://github.com/sentry-kubernetes/charts/commit/07157bd61bff026cd80d912d16c140c9168d90d3))
+
+## [26.6.0](https://github.com/sentry-kubernetes/charts/compare/sentry-v26.5.0...sentry-v26.6.0) (2024-11-25)
+
+
+### Features
+
+* disable Sentry anonymous usage statistics ([#1608](https://github.com/sentry-kubernetes/charts/issues/1608)) ([b679d97](https://github.com/sentry-kubernetes/charts/commit/b679d97e21e787857a7d1dc8fd7c84ceb759e083))
+
 ## [26.5.0](https://github.com/sentry-kubernetes/charts/compare/sentry-v26.4.0...sentry-v26.5.0) (2024-11-05)
 
 
@@ -42,6 +64,8 @@
 ### ⚠ BREAKING CHANGES
 
 Make sure to upgrade to chart version 25.20.0 (Seentry 24.8.0) before upgrading to 26.x.x
+
+**Note:** In version [sentry-v25.19.0](https://github.com/sentry-kubernetes/charts/releases/tag/sentry-v26.5.0) ([commit](https://github.com/sentry-kubernetes/charts/commit/f5a12e04ee5ffa28f1d62bf6c7cb5c733b30c2b9)), SASL authentication functionality for Kafka was added, which broke backward compatibility when using an external Kafka cluster. The single-host external kafka setup works correctly. The [issue #1584](https://github.com/sentry-kubernetes/charts/issues/1584) was fixed in version [sentry-v26.5.0](https://github.com/sentry-kubernetes/charts/releases/tag/sentry-v26.5.0) ([commit](https://github.com/sentry-kubernetes/charts/commit/889bd0d47235cb1ab5a7b52439f5b8df61026a03)). In this case, for a sequential upgrade, a viable workaround could be to use [sentry-v26.5.0](https://github.com/sentry-kubernetes/charts/releases/tag/sentry-v26.5.0) with `appVersion: 24.8.0` initially ([Chart.yml](https://github.com/sentry-kubernetes/charts/blob/sentry-v26.5.0/charts/sentry/Chart.yaml#L6)), and then use [sentry-v26.5.0](https://github.com/sentry-kubernetes/charts/releases/tag/sentry-v26.5.0) as is ([details](https://github.com/sentry-kubernetes/charts/pull/1588#issuecomment-2459117235)).
 
 ### Features
 
